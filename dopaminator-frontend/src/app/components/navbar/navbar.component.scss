@@ -36,16 +36,4 @@
       background-color: $emerald-darkest;
     }
   }
-
-  &__button {
-    background-color: $gold;
-    height: 48px;
-    border-radius: 16px;
-    padding: $base-padding;
-    margin: $base-padding;
-
-    &:hover {
-      background-color: $gold-dark;
-    }
-  }
 }

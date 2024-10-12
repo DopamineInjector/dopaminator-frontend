@@ -1,0 +1,12 @@
+@import "../styles.scss";
+
+.app-content {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.router-content {
+  width: 80%;
+  padding: $base-padding-2x;
+}
