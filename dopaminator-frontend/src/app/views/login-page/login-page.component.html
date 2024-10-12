@@ -1,1 +1,48 @@
-<div>login page</div>
+<card-component [title]="'Login'">
+  <div content [formGroup]="loginForm" class="login-page">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        [formControl]="loginForm.controls.email"
+        placeholder="Ex. bob@example.com"
+      />
+      <mat-error
+        *ngIf="
+          loginForm.controls.email.hasError('email') &&
+          !loginForm.controls.email.hasError('required')
+        "
+        ><strong>Please enter a valid email address</strong></mat-error
+      >
+      <mat-error *ngIf="loginForm.controls.email.hasError('required')"
+        ><strong>Email is required</strong></mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        matInput
+        [formControl]="loginForm.controls.password"
+        placeholder="Password"
+      />
+      <mat-error
+        *ngIf="
+          loginForm.controls.password.hasError('minlength') &&
+          !loginForm.controls.password.hasError('required')
+        "
+        ><strong>Password must be at least 8 characters long</strong></mat-error
+      >
+      <mat-error *ngIf="loginForm.controls.password.hasError('required')"
+        ><strong>Password is required</strong></mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div action class="form__action-buttons">
+    <button mat-button class="dope-button" [routerLink]="Views.MAIN_PAGE">
+      Cancel
+    </button>
+    <button mat-button class="dope-button" (click)="login()">Login</button>
+  </div>
+</card-component>

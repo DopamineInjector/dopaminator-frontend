@@ -1,8 +1,11 @@
 <main class="main">
+  <notification-component />
   <navbar-component
     [userName]="userName"
     (logIn)="userName = $event"
     (logOut)="userName = ''"
   />
-  <router-outlet />
+  <div class="app-content">
+    <div class="router-content"><router-outlet /></div>
+  </div>
 </main>

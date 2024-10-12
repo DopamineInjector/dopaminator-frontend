@@ -13,12 +13,12 @@ import {
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { LoginRequest, Views } from '../../types';
+import { SignupRequest, Views } from '../../types';
 import { NotificationService } from '../../services/notification.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'login-page',
+  selector: 'signup-page',
   standalone: true,
   imports: [
     RouterOutlet,
@@ -31,11 +31,11 @@ import { Subject, takeUntil } from 'rxjs';
     MatInputModule,
     RouterLink,
   ],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss',
+  templateUrl: './signup-page.component.html',
+  styleUrl: './signup-page.component.scss',
 })
-export class LoginPageComponent implements OnDestroy {
-  loginForm = new FormGroup({
+export class SignupPageComponent implements OnDestroy {
+  signupForm = new FormGroup({
     email: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.email, Validators.required],
@@ -43,6 +43,10 @@ export class LoginPageComponent implements OnDestroy {
     password: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(8)],
+    }),
+    username: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(5)],
     }),
   });
 
@@ -61,25 +65,26 @@ export class LoginPageComponent implements OnDestroy {
     this.componentDestroyed$.complete();
   }
 
-  getFormData(): LoginRequest {
+  getFormData(): SignupRequest {
     return {
-      email: this.loginForm.controls.email.value,
-      password: this.loginForm.controls.password.value,
+      email: this.signupForm.controls.email.value,
+      password: this.signupForm.controls.password.value,
+      username: this.signupForm.controls.username.value,
     };
   }
 
-  login() {
-    if (this.loginForm.invalid) {
+  signup() {
+    if (this.signupForm.invalid) {
       this.notificationService.error('Please fill all required fields');
-      this.loginForm.markAllAsTouched();
+      this.signupForm.markAllAsTouched();
       return;
     }
     this.apiService
-      .login(this.getFormData())
+      .signup(this.getFormData())
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
         next: () => {
-          this.notificationService.success('Logged in succesfully');
+          this.notificationService.success('User created succesfully');
           this.router.navigate([Views.MAIN_PAGE]);
         },
         error: (e) => {
