@@ -1,0 +1,51 @@
+@import "../../../styles.scss";
+
+.navbar-component {
+  background-color: $emerald-dark;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &__content {
+    max-height: 112px;
+    width: 224px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+  }
+
+  &__logo {
+    max-width: 96px;
+    max-height: 96px;
+    padding: $base-padding;
+    &:hover {
+      background-color: $emerald-darkest;
+    }
+  }
+
+  &__slots {
+    max-width: 96px;
+    max-height: 96px;
+    padding: $base-padding;
+    &:hover {
+      background-color: $emerald-darkest;
+    }
+  }
+
+  &__button {
+    background-color: $gold;
+    height: 48px;
+    border-radius: 16px;
+    padding: $base-padding;
+    margin: $base-padding;
+
+    &:hover {
+      background-color: $gold-dark;
+    }
+  }
+}

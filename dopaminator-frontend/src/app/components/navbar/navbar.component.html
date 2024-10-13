@@ -1,0 +1,34 @@
+<nav class="navbar-component">
+  <div class="navbar-component__content">
+    <img routerLink="" src="/logo.png" class="navbar-component__logo" />
+    <img
+      routerLink="/slots"
+      src="/slot_machine.png"
+      class="navbar-component__slots"
+    />
+  </div>
+
+  <div *ngIf="userName">
+    <div>Welcome back {{ userName }}!</div>
+    <div>
+      Are you ready for <span class="text__bold text__red">BIG WIN?</span>
+    </div>
+  </div>
+
+  <div class="navbar-component__buttons navbar-component__content">
+    <ng-container *ngIf="!userName; else loggedIn">
+      <button
+        class="navbar-component__button"
+        (click)="logIn.emit('placeholder')"
+      >
+        Login
+      </button>
+      <button class="navbar-component__button">Sign up</button>
+    </ng-container>
+    <ng-template #loggedIn>
+      <button class="navbar-component__button" (click)="logOut.emit()">
+        Logout
+      </button>
+    </ng-template>
+  </div>
+</nav>
