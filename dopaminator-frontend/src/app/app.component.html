@@ -1,8 +1,8 @@
 <main class="main">
-  <nav>
-    <a routerLink="">Main Page</a>
-    <a routerLink="/login">Login Page</a>
-    <a routerLink="/slots">Slots Page</a>
-  </nav>
+  <navbar-component
+    [userName]="userName"
+    (logIn)="userName = $event"
+    (logOut)="userName = ''"
+  />
   <router-outlet />
 </main>

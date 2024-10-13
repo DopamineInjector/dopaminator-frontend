@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+$emerald: #3aa35d;
+$emerald-light: #5fb687;
+$emerald-dark: #2f8a4b;
+$emerald-lightest: #8ac8a5;
+$emerald-darkest: #24693d;
+
+$gold: #cfa14a;
+$gold-light: #e0b86a;
+$gold-dark: #b07e30;
+$gold-lightest: #edd19a;
+$gold-darkest: #8f5e23;
+
+$red: #a93226;
+
+$base-padding: 8px;
+$base-padding-2x: 16px;
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: $gold;
+  background-color: $emerald;
+  margin: 0px;
+}
+
+.text {
+  &__bold {
+    font-weight: 800;
+    font-size: 24px;
+  }
+
+  &__red {
+    color: $red;
+  }
+
+  &__underline {
+    text-decoration: underline;
+  }
+}
