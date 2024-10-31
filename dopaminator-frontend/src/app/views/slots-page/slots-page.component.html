@@ -1,1 +1,56 @@
-<div>slots page</div>
+<card-component [title]="'$$$ Slots $$$'">
+  <div content>
+    <div class="base">
+      <div class="first-fruit" [ngClass]="{ 'fruit-animation': isSpinning }">
+        <ng-container *ngFor="let i of fruitsIterator">
+          <span
+            *ngFor="let fruit of Fruits | keyvalue"
+            [ngStyle]="{
+              '--ch': -firstFruitPosition,
+              'animation-duration': firstFruitAnimation
+            }"
+          >
+            <img [src]="fruit.value"
+          /></span>
+        </ng-container>
+      </div>
+      <div class="second-fruit" [ngClass]="{ 'fruit-animation': isSpinning }">
+        <ng-container *ngFor="let i of fruitsIterator">
+          <span
+            *ngFor="let fruit of Fruits | keyvalue"
+            [ngStyle]="{
+              '--ch': -secondFruitPosition,
+              'animation-duration': secondFruitAnimation
+            }"
+          >
+            <img [src]="fruit.value"
+          /></span>
+        </ng-container>
+      </div>
+      <div class="third-fruit" [ngClass]="{ 'fruit-animation': isSpinning }">
+        <ng-container *ngFor="let i of fruitsIterator">
+          <span
+            *ngFor="let fruit of Fruits | keyvalue"
+            [ngStyle]="{
+              '--ch': -thirdFruitPosition,
+              'animation-duration': thirdFruitAnimation
+            }"
+          >
+            <img [src]="fruit.value"
+          /></span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div action class="spin-action-button">
+    <button
+      mat-button
+      class="dope-button"
+      [disabled]="!canSpin"
+      (click)="spin()"
+    >
+      {{ canSpin ? "Spin" : "Spinning..." }}
+    </button>
+  </div>
+</card-component>

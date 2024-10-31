@@ -25,3 +25,13 @@ export interface Notification {
   type: 'success' | 'error';
   message: string;
 }
+
+export enum Fruits {
+  BANANA = '/fruits/bannana.png',
+  CHERRY = '/fruits/cherry.png',
+  ORANGE = '/fruits/orange.png',
+  PEER = '/fruits/peer.png',
+  PINEAPPLE = '/fruits/pineapple.png',
+  PLUM = '/fruits/plum.png',
+  STRAWBERRY = '/fruits/strawberry.png',
+}
