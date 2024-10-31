@@ -1,0 +1,42 @@
+@import "../../../styles.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.base {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.first-fruit,
+.second-fruit,
+.third-fruit {
+  display: flex;
+  flex-direction: column;
+  height: 96px;
+  background-color: $emerald-dark;
+  border: 1px solid $gold;
+  overflow: hidden;
+}
+
+.fruit-animation span {
+  animation: scroll ease-out forwards;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateY(calc(var(--ch) * 100%));
+  }
+}
+
+.spin-action-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
