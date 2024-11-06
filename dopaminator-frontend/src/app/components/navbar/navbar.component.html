@@ -1,10 +1,14 @@
 <nav class="navbar-component">
   <div class="navbar-component__content">
-    <img routerLink="" src="/logo.png" class="navbar-component__logo" />
     <img
-      routerLink="/slots"
+      [routerLink]="Views.MAIN_PAGE"
+      src="/logo.png"
+      class="navbar-component__logo"
+    />
+    <img
       src="/slot_machine.png"
       class="navbar-component__slots"
+      (click)="navigateToSlots()"
     />
   </div>
 
@@ -28,16 +32,15 @@
 
   <div class="navbar-component__buttons navbar-component__content">
     <ng-container *ngIf="!userName; else loggedIn">
-      <button
-        class="navbar-component__button"
-        (click)="logIn.emit('placeholder')"
-      >
+      <button mat-button [routerLink]="Views.LOGIN_PAGE" class="dope-button">
         Login
       </button>
-      <button class="navbar-component__button">Sign up</button>
+      <button mat-button [routerLink]="Views.SIGNUP_PAGE" class="dope-button">
+        Sign up
+      </button>
     </ng-container>
     <ng-template #loggedIn>
-      <button class="navbar-component__button" (click)="logOut.emit()">
+      <button mat-button class="dope-button" (click)="logOut.emit()">
         Logout
       </button>
     </ng-template>

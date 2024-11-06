@@ -1,4 +1,6 @@
+@use "@angular/material" as mat;
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@include mat.core();
 
 $emerald: #3aa35d;
 $emerald-light: #5fb687;
@@ -17,13 +19,19 @@ $red: #a93226;
 $base-padding: 8px;
 $base-padding-2x: 16px;
 
+html,
 body {
-  font-family: "Roboto", sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 18px;
   line-height: 1.5;
   color: $gold;
   background-color: $emerald;
-  margin: 0px;
+  width: 100%;
 }
 
 .text {
@@ -38,5 +46,29 @@ body {
 
   &__underline {
     text-decoration: underline;
+  }
+}
+
+.form {
+  &__content {
+    padding: $base-padding-2x;
+  }
+
+  &__action-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: $base-padding-2x;
+  }
+}
+
+.dope-button {
+  color: $gold !important;
+  padding: $base-padding;
+  margin: $base-padding;
+
+  &:hover {
+    background-color: $gold-dark;
   }
 }

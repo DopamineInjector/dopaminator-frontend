@@ -1,0 +1,69 @@
+<card-component [title]="'Signup'">
+  <div content [formGroup]="signupForm" class="signup-page">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        [formControl]="signupForm.controls.email"
+        placeholder="Ex. bob@example.com"
+      />
+      <mat-error
+        *ngIf="
+          signupForm.controls.email.hasError('email') &&
+          !signupForm.controls.email.hasError('required')
+        "
+        ><strong>Please enter a valid email address</strong></mat-error
+      >
+      <mat-error *ngIf="signupForm.controls.email.hasError('required')"
+        ><strong>Email is required</strong></mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="signupForm.controls.username"
+        placeholder="Ex. bob@example.com"
+      />
+      <mat-error
+        *ngIf="
+          signupForm.controls.username.hasError('minlength') &&
+          !signupForm.controls.username.hasError('required')
+        "
+        ><strong>Username must be at least 5 characters long</strong></mat-error
+      >
+      <mat-error *ngIf="signupForm.controls.username.hasError('required')"
+        ><strong>Username is required</strong></mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        matInput
+        [formControl]="signupForm.controls.password"
+        placeholder="Password"
+      />
+      <mat-error
+        *ngIf="
+          signupForm.controls.password.hasError('minlength') &&
+          !signupForm.controls.password.hasError('required')
+        "
+        ><strong>Password must be at least 8 characters long</strong></mat-error
+      >
+      <mat-error *ngIf="signupForm.controls.password.hasError('required')"
+        ><strong>Password is required</strong></mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div action class="form__action-buttons">
+    <button mat-button class="dope-button" [routerLink]="Views.MAIN_PAGE">
+      Cancel
+    </button>
+    <button mat-button class="dope-button" (click)="signup()">Signup</button>
+  </div>
+</card-component>

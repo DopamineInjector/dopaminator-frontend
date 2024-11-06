@@ -1,0 +1,10 @@
+<div
+  *ngIf="notification"
+  [ngClass]="{
+    'notification-success': notification.type === 'success',
+    'notification-error': notification.type === 'error'
+  }"
+  class="notification"
+>
+  {{ notification.message }}
+</div>
