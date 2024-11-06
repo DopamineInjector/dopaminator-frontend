@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
-import { LoginRequest, LoginResponse, SignupRequest } from '../types';
+import {
+  LoginRequest,
+  LoginResponse,
+  SignupRequest,
+  SpinResponse,
+} from '../types';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -38,11 +43,11 @@ export class ApiService {
     this.isLoggedIn$.next(false);
   }
 
-  spin(): Observable<string> {
+  spin(): Observable<SpinResponse> {
     const token = this.cookieService.get('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<string>(`${this.baseUrl}/login`, { headers });
+    return this.http.get<SpinResponse>(`${this.baseUrl}/spin`, { headers });
   }
 }
