@@ -6,9 +6,9 @@
       class="navbar-component__logo"
     />
     <img
-      [routerLink]="Views.SLOTS_PAGE"
       src="/slot_machine.png"
       class="navbar-component__slots"
+      (click)="navigateToSlots()"
     />
   </div>
 

@@ -4,6 +4,9 @@ import { Fruits } from '../../types';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ApiService } from '../../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'slots-page',
@@ -13,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './slots-page.component.scss',
 })
 export class SlotsPageComponent implements OnInit {
-  numberOfFruits = 7; //todo object.keyvalue.length
+  numberOfFruits = 7;
   loops = 10;
   fruitsIterator: Number[] = [];
 
@@ -30,6 +33,13 @@ export class SlotsPageComponent implements OnInit {
   canSpin: boolean = true;
 
   protected Fruits = Fruits;
+
+  private componentDestroyed$ = new Subject<void>();
+
+  constructor(
+    private apiService: ApiService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.fruitsIterator = Array(this.loops);
@@ -53,24 +63,36 @@ export class SlotsPageComponent implements OnInit {
 
     setTimeout(() => {
       this.randomizeSpinTimers();
-
       const maxSpinTime = Math.max(
         this.firstFruitSpinTime,
         this.secondFruitSpinTime,
         this.thirdFruitSpinTime
       );
 
-      if (Math.random() > 0.5) {
-        this.setWinningPositions();
-      } else {
-        this.setRandomPositions();
-      }
-
-      this.isSpinning = true;
-
-      setTimeout(() => {
-        this.canSpin = true;
-      }, maxSpinTime * 1000);
+      this.apiService
+        .spin()
+        .pipe(takeUntil(this.componentDestroyed$))
+        .subscribe({
+          next: (result) => {
+            if (result.isWin) {
+              this.setWinningPositions();
+            } else {
+              this.setRandomPositions();
+            }
+            this.isSpinning = true;
+            setTimeout(() => {
+              this.canSpin = true;
+            }, maxSpinTime * 1000);
+          },
+          error: (e) => {
+            if (e.error && e.error.message) {
+              this.notificationService.error(e.error.message);
+            } else {
+              this.notificationService.error('An unknown error occurred');
+            }
+            this.canSpin = true;
+          },
+        });
     }, 50);
   }
 

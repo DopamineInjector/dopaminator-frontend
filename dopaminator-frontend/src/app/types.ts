@@ -14,6 +14,10 @@ export interface LoginResponse {
   token: string;
 }
 
+export interface SpinResponse {
+  isWin: boolean;
+}
+
 export enum Views {
   MAIN_PAGE = '',
   LOGIN_PAGE = 'login',
