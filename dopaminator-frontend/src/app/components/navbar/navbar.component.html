@@ -15,6 +15,17 @@
     </div>
   </div>
 
+  <div>
+    <input
+    matInput
+    type="text"
+    placeholder="Szukaj użytkownika..."
+    [(ngModel)]="searchPhrase"
+    (keyup.enter)="search()"
+  />
+  <button (click)="search()">Szukaj</button>
+  </div>
+
   <div class="navbar-component__buttons navbar-component__content">
     <ng-container *ngIf="!userName; else loggedIn">
       <button

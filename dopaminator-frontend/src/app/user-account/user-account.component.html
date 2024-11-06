@@ -1,0 +1,18 @@
+<div class="user-account">
+    <div class="user-info">
+      <img [src]="user.avatarUrl" alt="User Avatar" class="user-avatar" />
+      <h2 class="user-name">{{ user.name }}</h2>
+    </div>
+  
+    <div class="user-posts">
+      <h3>Posty użytkownika:</h3>
+      <div class="post" *ngFor="let post of user.posts">
+        <div class="post-content">
+          <h4 class="post-title">{{ post.title }}</h4>
+          <p class="post-description">{{ post.description }}</p>
+          <img [src]="post.imageUrl" alt="Post Image" class="post-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+  
