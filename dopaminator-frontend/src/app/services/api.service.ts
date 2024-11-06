@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
+import { map, Observable, Subject, tap } from 'rxjs';
 import {
   LoginRequest,
   LoginResponse,
@@ -49,5 +49,16 @@ export class ApiService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get<SpinResponse>(`${this.baseUrl}/spin`, { headers });
+  }
+
+  getMainPageImg(): Observable<string> {
+    const headers = new HttpHeaders({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+    });
+    return this.http
+      .get(`${this.baseUrl}/main`, { responseType: 'blob', headers })
+      .pipe(map((blob) => URL.createObjectURL(blob)));
   }
 }

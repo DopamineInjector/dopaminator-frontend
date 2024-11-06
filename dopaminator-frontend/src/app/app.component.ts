@@ -25,6 +25,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.userName = this.cookieService.check('username')
+      ? this.cookieService.get('username')
+      : null;
+
     this.apiService.isLoggedIn$
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe((isLoggedIn) => {
