@@ -9,6 +9,14 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface findUserRequest {
+  username: string;
+}
+
+export interface findUserResponse{
+  exists: boolean;
+}
+
 export interface LoginResponse {
   username: string;
   token: string;

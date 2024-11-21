@@ -25,9 +25,9 @@
     type="text"
     placeholder="Szukaj użytkownika..."
     [(ngModel)]="searchPhrase"
-    (keyup.enter)="search()"
+    (keyup.enter)="search(searchPhrase)"
   />
-  <button (click)="search()">Szukaj</button>
+  <button (click)="search(searchPhrase)">Szukaj</button>
   </div>
 
   <div class="navbar-component__buttons navbar-component__content">
@@ -40,7 +40,10 @@
       </button>
     </ng-container>
     <ng-template #loggedIn>
-      <button mat-button class="dope-button" (click)="logOut.emit()">
+      <button mat-button class="dope-button" (click)="navigateToAccount()">
+        My account
+      </button>
+      <button mat-button class="dope-button" (click)="logout()">
         Logout
       </button>
     </ng-template>

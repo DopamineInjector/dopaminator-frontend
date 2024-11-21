@@ -45,6 +45,8 @@ export class UserAccountComponent implements OnInit {
     ]
   };
 
+  currentUser: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {

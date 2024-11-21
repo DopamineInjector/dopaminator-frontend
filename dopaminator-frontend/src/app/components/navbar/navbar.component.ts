@@ -36,8 +36,8 @@ export class NavbarComponent {
     private appComponent: AppComponent
   ) {}
 
-  search() {
-    this.appComponent.searchUser(this.searchPhrase);
+  search(user: string) {
+    this.appComponent.searchUser(user);
   }
 
   navigateToSlots() {
@@ -46,5 +46,17 @@ export class NavbarComponent {
     } else {
       this.notificationService.error('You must log in to access this page');
     }
+  }
+
+  navigateToAccount() {
+    if (this.userName) {
+      this.search(this.userName);
+    } else {
+      this.notificationService.error('You must log in to access this page');
+    }
+  }
+
+  logout() {
+    this.appComponent.logout();
   }
 }

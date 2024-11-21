@@ -25,8 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  users = ['dopaminator69'];
-
   ngOnInit(): void {
     this.userName = this.cookieService.check('username')
       ? this.cookieService.get('username')
@@ -44,11 +42,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   searchUser(searchedUser: string) {
-    if (this.users.includes(searchedUser.toLowerCase())) {
-      this.router.navigate(['/account', searchedUser]);
-    } else {
-      this.router.navigate(['/404']);
-    }
+    this.apiService.findUser({username: searchedUser}).subscribe(exists => {
+      if(exists) {
+        this.router.navigate(['/account', searchedUser]);
+      }
+      else {
+        this.router.navigate(['/404']);
+      }
+    });
+  }
+
+  logout() {
+    this.apiService.logout();
   }
 
   ngOnDestroy() {

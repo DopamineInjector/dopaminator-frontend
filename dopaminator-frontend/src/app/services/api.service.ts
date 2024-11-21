@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, Subject, tap } from 'rxjs';
 import {
+  findUserRequest,
+  findUserResponse,
   LoginRequest,
   LoginResponse,
   SignupRequest,
   SpinResponse,
 } from '../types';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,7 @@ export class ApiService {
 
   private baseUrl = 'http://localhost:5264/api/users';
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
 
   signup(body: SignupRequest): Observable<LoginResponse> {
     return this.http
@@ -38,9 +41,32 @@ export class ApiService {
   }
 
   logout() {
+    console.log('funkcja api');
+    const token = this.cookieService.get('token');
+    if (token) {
+      this.http.post(`${this.baseUrl}/logout`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }).subscribe({
+        next: () => {
+          console.log("zajebiscie");
+        },
+        error: (err) => {
+          console.error('Error during logout:', err);
+        }
+      });
+    }
     this.cookieService.delete('token');
     this.cookieService.delete('username');
     this.isLoggedIn$.next(false);
+    this.router.navigate(['/login']);
+  }
+
+  findUser(body: findUserRequest): Observable<boolean> {
+    return this.http
+    .post<findUserResponse>(`${this.baseUrl}/find`, body)
+    .pipe(map(response => response.exists));
   }
 
   spin(): Observable<SpinResponse> {
