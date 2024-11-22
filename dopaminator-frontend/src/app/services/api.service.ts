@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, Subject, tap } from 'rxjs';
 import {
-  findUserRequest,
-  findUserResponse,
+  GetUserRequest,
+  FindUserResponse,
+  GetUserResponse,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -41,32 +42,20 @@ export class ApiService {
   }
 
   logout() {
-    console.log('funkcja api');
-    const token = this.cookieService.get('token');
-    if (token) {
-      this.http.post(`${this.baseUrl}/logout`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      }).subscribe({
-        next: () => {
-          console.log("zajebiscie");
-        },
-        error: (err) => {
-          console.error('Error during logout:', err);
-        }
-      });
-    }
     this.cookieService.delete('token');
     this.cookieService.delete('username');
     this.isLoggedIn$.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
-  findUser(body: findUserRequest): Observable<boolean> {
+  findUser(body: GetUserRequest): Observable<boolean> {
     return this.http
-    .post<findUserResponse>(`${this.baseUrl}/find`, body)
+    .post<FindUserResponse>(`${this.baseUrl}/find`, body)
     .pipe(map(response => response.exists));
+  }
+
+  getUser(body: GetUserRequest): Observable<GetUserResponse> {
+    return this.http.post<GetUserResponse>(`${this.baseUrl}/get`, body)
   }
 
   spin(): Observable<SpinResponse> {

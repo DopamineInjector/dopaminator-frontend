@@ -9,17 +9,29 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface findUserRequest {
+export interface GetUserRequest {
   username: string;
 }
 
-export interface findUserResponse{
+export interface FindUserResponse{
   exists: boolean;
 }
 
 export interface LoginResponse {
   username: string;
   token: string;
+}
+
+export interface GetUserResponse {
+  username: string;
+  posts: [];
+}
+
+export interface Post {
+  id: number,
+  title: string;
+  description: string;
+  imageUrl: string;
 }
 
 export interface SpinResponse {

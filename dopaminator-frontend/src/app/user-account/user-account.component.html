@@ -1,11 +1,15 @@
 <div class="user-account">
     <div class="user-info">
       <img [src]="user.avatarUrl" alt="User Avatar" class="user-avatar" />
-      <h2 class="user-name">{{ user.name }}</h2>
+      <div>
+        <h2 class="user-name">{{ user.name }}</h2>
+        <h3 class="user-money" *ngIf="currentUser">Dopamine: {{user.money}}</h3>
+      </div>
     </div>
   
     <div class="user-posts">
       <h3>Posty użytkownika:</h3>
+      <div class="no-posts-message" *ngIf="!user.posts">Ten użytkownik nie ma żadnych postów</div>
       <div class="post" *ngFor="let post of user.posts">
         <div class="post-content">
           <h4 class="post-title">{{ post.title }}</h4>
