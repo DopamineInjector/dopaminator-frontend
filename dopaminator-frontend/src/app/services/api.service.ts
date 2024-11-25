@@ -79,6 +79,22 @@ export class ApiService {
     return this.http.post<boolean>(`${this.baseUrl}/posts/create`, body, {headers});
   }
 
+  editPost(id: number, body: CreatePostRequest): Observable<boolean> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put<boolean>(`${this.baseUrl}/posts/edit/${id}`, body, {headers});
+  }
+
+  deletePost(id: number): Observable<boolean> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<boolean>(`${this.baseUrl}/posts/delete/${id}`, {headers});
+  }
+
   getMainPageImg(): Observable<string> {
     const headers = new HttpHeaders({
       'Cache-Control': 'no-cache, no-store, must-revalidate',

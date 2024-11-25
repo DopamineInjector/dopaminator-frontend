@@ -92,4 +92,32 @@ export class UserAccountComponent implements OnInit {
       }
     });
   }
+
+  editPost(id: number) {
+    var toEdit = this.user.posts.filter(p => {
+      return p.id === id
+    });
+    const dialogRef = this.dialog.open(AddPostDialogComponent, {
+      width: '400px',
+      data: {
+        title: toEdit[0].title,
+        content: toEdit[0].content
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.editPost(id, {title: result.title, content: result.content}).subscribe(r => {
+          this.loadUserData()
+        });
+      }
+    });
+  }
+
+  deletePost(id: number) {
+    this.apiService.deletePost(id).subscribe(r => {
+      console.log(r);
+      this.loadUserData();
+    })
+  }
 }

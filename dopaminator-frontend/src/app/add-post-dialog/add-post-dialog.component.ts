@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,11 +16,12 @@ export class AddPostDialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddPostDialogComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: { title: string; content: string }
   ) {
     this.postForm = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required]
+      title: [data?.title || '', Validators.required],
+      content: [data?.content || '', Validators.required]
     });
   }
 

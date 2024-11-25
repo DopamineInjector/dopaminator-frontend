@@ -20,10 +20,10 @@
         <div class="post-content">
           <div class="post-title">
             <h4 >{{ post.title }}</h4>
-            <button mat-stroked-button color="accent" *ngIf="currentUser">
+            <button mat-stroked-button color="accent" *ngIf="currentUser" (click)="editPost(post.id)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-stroked-button color="accent" *ngIf="currentUser">
+            <button mat-stroked-button color="accent" *ngIf="currentUser" (click)="deletePost(post.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
