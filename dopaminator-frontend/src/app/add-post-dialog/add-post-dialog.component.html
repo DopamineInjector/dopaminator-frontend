@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Dodaj Post</h2>
+
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Tytuł</mat-label>
+    <input matInput formControlName="title" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Treść</mat-label>
+    <textarea matInput formControlName="content" required></textarea>
+  </mat-form-field>
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Anuluj</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Zatwierdź</button>
+  </div>
+</form>
+

@@ -3,12 +3,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '../services/api.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddPostDialogComponent } from '../add-post-dialog/add-post-dialog.component';
 
 interface Post {
   id: number,
   title: string;
-  description: string;
-  imageUrl: string;
+  content: string;
+  imageUrl?: string;
 }
 
 interface User {
@@ -22,7 +26,7 @@ interface User {
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.scss'],
-  imports: [NgFor, NgIf],
+  imports: [NgFor, NgIf, MatButtonModule, MatIconModule, MatDialogModule],
   standalone: true
 })
 export class UserAccountComponent implements OnInit {
@@ -36,19 +40,19 @@ export class UserAccountComponent implements OnInit {
       {
         id: 1,
         title: 'Tytuł1',
-        description: this.loremIpsum,
+        content: this.loremIpsum,
         imageUrl: 'https://via.placeholder.com/300'
       },
       {
         id: 2,
         title: 'Tytuł2',
-        description: this.loremIpsum,
+        content: this.loremIpsum,
         imageUrl: 'https://via.placeholder.com/300'
       },
       {
         id: 3,
         title: 'Tytuł3',
-        description: this.loremIpsum,
+        content: this.loremIpsum,
         imageUrl: 'https://via.placeholder.com/300'
       }
     ]
@@ -56,7 +60,7 @@ export class UserAccountComponent implements OnInit {
 
   currentUser: boolean = false;
 
-  constructor(private cookieService: CookieService, private route: ActivatedRoute, private apiService: ApiService) {}
+  constructor(private cookieService: CookieService, private route: ActivatedRoute, private apiService: ApiService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -69,9 +73,23 @@ export class UserAccountComponent implements OnInit {
     if(this.userName) {
       this.apiService.getUser({username: this.userName}).subscribe(user => {
         this.user.name =  user.username;
-        //this.user.posts = user.posts;
+        this.user.posts = user.posts;
       });
     }
     this.currentUser = (this.userName == this.cookieService.get("username"));
+  }
+
+  addPost() {
+    const dialogRef = this.dialog.open(AddPostDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.addPost({title: result.title, content: result.content}).subscribe(r => {
+          this.loadUserData()
+        });
+      }
+    });
   }
 }

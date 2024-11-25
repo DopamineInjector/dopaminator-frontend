@@ -9,6 +9,7 @@ import {
   LoginResponse,
   SignupRequest,
   SpinResponse,
+  CreatePostRequest,
 } from '../types';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -19,19 +20,19 @@ import { Router } from '@angular/router';
 export class ApiService {
   isLoggedIn$ = new Subject<boolean>();
 
-  private baseUrl = 'http://localhost:5264/api/users';
+  private baseUrl = 'http://localhost:5264/api';
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
 
   signup(body: SignupRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.baseUrl}/signup`, body)
+      .post<LoginResponse>(`${this.baseUrl}/users/signup`, body)
       .pipe(tap((response) => this.setCredentials(response)));
   }
 
   login(body: LoginRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.baseUrl}/login`, body)
+      .post<LoginResponse>(`${this.baseUrl}/users/login`, body)
       .pipe(tap((response) => this.setCredentials(response)));
   }
 
@@ -50,12 +51,16 @@ export class ApiService {
 
   findUser(body: GetUserRequest): Observable<boolean> {
     return this.http
-    .post<FindUserResponse>(`${this.baseUrl}/find`, body)
+    .post<FindUserResponse>(`${this.baseUrl}/users/find`, body)
     .pipe(map(response => response.exists));
   }
 
   getUser(body: GetUserRequest): Observable<GetUserResponse> {
-    return this.http.post<GetUserResponse>(`${this.baseUrl}/get`, body)
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<GetUserResponse>(`${this.baseUrl}/users/get`, body, {headers})
   }
 
   spin(): Observable<SpinResponse> {
@@ -63,7 +68,15 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<SpinResponse>(`${this.baseUrl}/spin`, { headers });
+    return this.http.get<SpinResponse>(`${this.baseUrl}/users/spin`, { headers });
+  }
+
+  addPost(body: CreatePostRequest): Observable<boolean> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<boolean>(`${this.baseUrl}/posts/create`, body, {headers});
   }
 
   getMainPageImg(): Observable<string> {
@@ -73,7 +86,7 @@ export class ApiService {
       Expires: '0',
     });
     return this.http
-      .get(`${this.baseUrl}/main`, { responseType: 'blob', headers })
+      .get(`${this.baseUrl}/users/main`, { responseType: 'blob', headers })
       .pipe(map((blob) => URL.createObjectURL(blob)));
   }
 }

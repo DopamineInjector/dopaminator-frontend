@@ -27,10 +27,15 @@ export interface GetUserResponse {
   posts: [];
 }
 
-export interface Post {
-  id: number,
+export interface CreatePostRequest {
   title: string;
-  description: string;
+  content: string;
+}
+
+export interface Post {
+  id: number;
+  title: string;
+  content: string;
   imageUrl: string;
 }
 

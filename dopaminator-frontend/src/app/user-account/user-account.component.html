@@ -2,19 +2,33 @@
     <div class="user-info">
       <img [src]="user.avatarUrl" alt="User Avatar" class="user-avatar" />
       <div>
-        <h2 class="user-name">{{ user.name }}</h2>
+        <h2 class="user-name">
+          {{ user.name }} 
+          <button mat-stroked-button color="accent" *ngIf="currentUser" (click)="addPost()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </h2>
         <h3 class="user-money" *ngIf="currentUser">Dopamine: {{user.money}}</h3>
       </div>
     </div>
   
     <div class="user-posts">
       <h3>Posty użytkownika:</h3>
-      <div class="no-posts-message" *ngIf="!user.posts">Ten użytkownik nie ma żadnych postów</div>
+      <div class="no-posts-message" *ngIf="!user.posts.length">Ten użytkownik nie ma żadnych postów</div>
+
       <div class="post" *ngFor="let post of user.posts">
         <div class="post-content">
-          <h4 class="post-title">{{ post.title }}</h4>
-          <p class="post-description">{{ post.description }}</p>
-          <img [src]="post.imageUrl" alt="Post Image" class="post-image" />
+          <div class="post-title">
+            <h4 >{{ post.title }}</h4>
+            <button mat-stroked-button color="accent" *ngIf="currentUser">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-stroked-button color="accent" *ngIf="currentUser">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <p class="post-description">{{ post.content }}</p>
+          <!-- <img [src]="post.imageUrl" alt="Post Image" class="post-image" /> -->
         </div>
       </div>
     </div>
