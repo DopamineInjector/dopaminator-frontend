@@ -1,17 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Fruits } from '../../types';
+import { Fruits, SpinResponse } from '../../types';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { BigWinModalComponent } from '../../components/big-win-modal/big-win-modal.component';
 
 @Component({
   selector: 'slots-page',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, CardComponent, MatButtonModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    CardComponent,
+    MatButtonModule,
+    MatDialogModule,
+  ],
   templateUrl: './slots-page.component.html',
   styleUrl: './slots-page.component.scss',
 })
@@ -38,7 +46,8 @@ export class SlotsPageComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +91,9 @@ export class SlotsPageComponent implements OnInit {
             this.isSpinning = true;
             setTimeout(() => {
               this.canSpin = true;
+              if (result.isWin) {
+                this.openBigWinModal(result);
+              }
             }, maxSpinTime * 1000);
           },
           error: (e) => {
@@ -126,5 +138,12 @@ export class SlotsPageComponent implements OnInit {
     this.thirdFruitPosition =
       Math.floor(Math.random() * this.numberOfFruits * (this.loops - 1)) +
       this.numberOfFruits;
+  }
+
+  openBigWinModal(result: SpinResponse) {
+    this.dialog.open(BigWinModalComponent, {
+      width: '400px',
+      data: result,
+    });
   }
 }

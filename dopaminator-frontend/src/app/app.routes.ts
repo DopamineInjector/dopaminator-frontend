@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: Views.SLOTS_PAGE, component: SlotsPageComponent },
   { path: Views.LOGIN_PAGE, component: LoginPageComponent },
   { path: Views.SIGNUP_PAGE, component: SignupPageComponent },
-  { path: 'account/:username', component: AccountPageComponent },
+  { path: Views.ACCOUNT_PAGE, component: AccountPageComponent },
   { path: Views.NOT_FOUND_PAGE, component: NotFoundPageComponent },
-  { path: '**', redirectTo: '/404' }
+  { path: '**', redirectTo: '/404' },
 ];

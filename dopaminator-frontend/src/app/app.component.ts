@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet, Router } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ApiService } from './services/api.service';
@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NavbarComponent, NotificationComponent],
+  imports: [RouterOutlet, NavbarComponent, NotificationComponent],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -21,8 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private apiService: ApiService,
-    private cookieService: CookieService,
-    private router: Router
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {
@@ -39,21 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
             : null
           : null;
       });
-  }
-
-  searchUser(searchedUser: string) {
-    this.apiService.findUser({username: searchedUser}).subscribe(exists => {
-      if(exists) {
-        this.router.navigate(['/account', searchedUser]);
-      }
-      else {
-        this.router.navigate(['/404']);
-      }
-    });
-  }
-
-  logout() {
-    this.apiService.logout();
   }
 
   ngOnDestroy() {

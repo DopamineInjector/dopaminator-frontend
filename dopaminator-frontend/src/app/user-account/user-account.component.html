@@ -1,29 +1,49 @@
-<div class="user-account">
+<ng-container *ngIf="user$">
+  <div class="user-account" *ngIf="user$ | async; let user">
     <div class="user-info">
-      <img [src]="user.avatarUrl" alt="User Avatar" class="user-avatar" />
+      <img [src]="placeholderAvatar" alt="User Avatar" class="user-avatar" />
       <div>
         <h2 class="user-name">
-          {{ user.name }} 
-          <button mat-stroked-button color="accent" *ngIf="currentUser" (click)="addPost()">
+          {{ user.username }}
+          <button
+            mat-stroked-button
+            color="accent"
+            *ngIf="currentUser"
+            (click)="addPost()"
+          >
             <mat-icon>add</mat-icon>
           </button>
         </h2>
-        <h3 class="user-money" *ngIf="currentUser">Dopamine: {{user.money}}</h3>
+        <h3 class="user-money" *ngIf="currentUser">
+          Dopamine: {{ balance$ | async }}
+        </h3>
       </div>
     </div>
-  
+
     <div class="user-posts">
-      <h3>Posty użytkownika:</h3>
-      <div class="no-posts-message" *ngIf="!user.posts.length">Ten użytkownik nie ma żadnych postów</div>
+      <h3>User's posts:</h3>
+      <div class="no-posts-message" *ngIf="!user.posts.length">
+        Nothing to show
+      </div>
 
       <div class="post" *ngFor="let post of user.posts">
         <div class="post-content">
           <div class="post-title">
-            <h4 >{{ post.title }}</h4>
-            <button mat-stroked-button color="accent" *ngIf="currentUser" (click)="editPost(post.id)">
+            <h4>{{ post.title }}</h4>
+            <button
+              mat-stroked-button
+              color="accent"
+              *ngIf="currentUser"
+              (click)="editPost(post)"
+            >
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-stroked-button color="accent" *ngIf="currentUser" (click)="deletePost(post.id)">
+            <button
+              mat-stroked-button
+              color="accent"
+              *ngIf="currentUser"
+              (click)="deletePost(post.id)"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -33,4 +53,4 @@
       </div>
     </div>
   </div>
-  
+</ng-container>

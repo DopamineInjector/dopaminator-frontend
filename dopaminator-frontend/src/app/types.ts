@@ -1,3 +1,22 @@
+export interface Auction {
+  id: number;
+  sellerId: number;
+  nftId: number;
+  nftDescription: string;
+  price: number;
+}
+
+export interface PostAuctionRequest {
+  nftId: number;
+  price: number;
+  nftName: string;
+}
+
+export interface Nft {
+  id: number;
+  description: string;
+}
+
 export interface SignupRequest {
   username: string;
   email: string;
@@ -13,7 +32,7 @@ export interface GetUserRequest {
   username: string;
 }
 
-export interface FindUserResponse{
+export interface FindUserResponse {
   exists: boolean;
 }
 
@@ -24,7 +43,7 @@ export interface LoginResponse {
 
 export interface GetUserResponse {
   username: string;
-  posts: [];
+  posts: Post[];
 }
 
 export interface CreatePostRequest {
@@ -41,6 +60,8 @@ export interface Post {
 
 export interface SpinResponse {
   isWin: boolean;
+  image: Blob;
+  name: string;
 }
 
 export enum Views {
@@ -48,7 +69,8 @@ export enum Views {
   LOGIN_PAGE = 'login',
   SLOTS_PAGE = 'slots',
   SIGNUP_PAGE = 'signup',
-  NOT_FOUND_PAGE = '404'
+  ACCOUNT_PAGE = 'account',
+  NOT_FOUND_PAGE = '404',
 }
 
 export interface Notification {
