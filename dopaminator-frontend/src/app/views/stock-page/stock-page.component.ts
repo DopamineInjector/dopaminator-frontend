@@ -11,12 +11,9 @@ import { Subject } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-account-page',
+  selector: 'app-stock-page',
   standalone: true,
   imports: [
-    UserAccountComponent,
-    CardComponent,
-    CardComponent,
     MatButtonModule,
     MatFormFieldModule,
     FormsModule,
@@ -24,11 +21,12 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
+    CardComponent,
   ],
-  templateUrl: './account-page.component.html',
-  styleUrl: './account-page.component.scss',
+  templateUrl: './stock-page.component.html',
+  styleUrl: './stock-page.component.scss',
 })
-export class AccountPageComponent implements OnInit {
+export class StockPageComponent implements OnInit {
   username: string | null = '';
 
   searchedUsernameControl = new FormControl<string>('');

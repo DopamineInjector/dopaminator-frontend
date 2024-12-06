@@ -1,28 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { AppComponent } from '../../app.component';
-import {
-  Router,
-  RouterLink,
-  RouterModule,
-  RouterOutlet,
-} from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Views } from '../../types';
 import { NotificationService } from '../../services/notification.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'navbar-component',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, MatInputModule, MatButtonModule, FormsModule, RouterModule],
+  imports: [
+    RouterLink,
+    CommonModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+    RouterModule,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
   @Input() userName?: string | null;
-  searchPhrase: string = "";
+  searchPhrase: string = '';
 
   @Output() logIn = new EventEmitter<string>();
 
@@ -33,12 +35,8 @@ export class NavbarComponent {
   constructor(
     private router: Router,
     private notificationService: NotificationService,
-    private appComponent: AppComponent
+    private apiService: ApiService
   ) {}
-
-  search(user: string) {
-    this.appComponent.searchUser(user);
-  }
 
   navigateToSlots() {
     if (this.userName) {
@@ -48,15 +46,13 @@ export class NavbarComponent {
     }
   }
 
-  navigateToAccount() {
-    if (this.userName) {
-      this.search(this.userName);
-    } else {
-      this.notificationService.error('You must log in to access this page');
-    }
+  navigateToAccount(username?: string) {
+    this.router.navigate([Views.ACCOUNT_PAGE], {
+      state: { username: username },
+    });
   }
 
   logout() {
-    this.appComponent.logout();
+    this.apiService.logout();
   }
 }

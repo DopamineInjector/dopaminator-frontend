@@ -21,7 +21,6 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'login-page',
   standalone: true,
   imports: [
-    RouterOutlet,
     CardComponent,
     MatButtonModule,
     MatFormFieldModule,

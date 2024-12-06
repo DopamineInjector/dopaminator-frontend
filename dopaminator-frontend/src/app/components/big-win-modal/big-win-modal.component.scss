@@ -1,0 +1,19 @@
+img {
+  max-width: 95%;
+  height: 700px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spin-action-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

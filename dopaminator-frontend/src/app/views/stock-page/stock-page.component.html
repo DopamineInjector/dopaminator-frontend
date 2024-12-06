@@ -1,7 +1,7 @@
 <card-component [title]="'Accounts'">
   <div content>
     <mat-form-field class="accounts-page__search-form-field">
-      <mat-label>Find other successfull gamblers:</mat-label>
+      <mat-label>Search for offers:</mat-label>
       <input
         type="text"
         matInput
@@ -20,8 +20,5 @@
     <mat-error *ngIf="displayNoUserError">
       <strong>User does not exist</strong>
     </mat-error>
-    <div *ngIf="username">
-      <app-user-account [username]="username"></app-user-account>
-    </div>
   </div>
 </card-component>

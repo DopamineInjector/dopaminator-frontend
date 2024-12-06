@@ -22,7 +22,11 @@ export class ApiService {
 
   private baseUrl = 'http://localhost:5264/api';
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
 
   signup(body: SignupRequest): Observable<LoginResponse> {
     return this.http
@@ -51,8 +55,8 @@ export class ApiService {
 
   findUser(body: GetUserRequest): Observable<boolean> {
     return this.http
-    .post<FindUserResponse>(`${this.baseUrl}/users/find`, body)
-    .pipe(map(response => response.exists));
+      .post<FindUserResponse>(`${this.baseUrl}/users/find`, body)
+      .pipe(map((response) => response.exists));
   }
 
   getUser(body: GetUserRequest): Observable<GetUserResponse> {
@@ -60,7 +64,19 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<GetUserResponse>(`${this.baseUrl}/users/get`, body, {headers})
+    return this.http.post<GetUserResponse>(`${this.baseUrl}/users/get`, body, {
+      headers,
+    });
+  }
+
+  getBalance(): Observable<number> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http
+      .get<{ balance: number }>(`${this.baseUrl}/users/balance`, { headers })
+      .pipe(map((response) => response.balance));
   }
 
   spin(): Observable<SpinResponse> {
@@ -68,7 +84,9 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<SpinResponse>(`${this.baseUrl}/users/spin`, { headers });
+    return this.http.get<SpinResponse>(`${this.baseUrl}/users/spin`, {
+      headers,
+    });
   }
 
   addPost(body: CreatePostRequest): Observable<boolean> {
@@ -76,7 +94,9 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<boolean>(`${this.baseUrl}/posts/create`, body, {headers});
+    return this.http.post<boolean>(`${this.baseUrl}/posts/create`, body, {
+      headers,
+    });
   }
 
   editPost(id: number, body: CreatePostRequest): Observable<boolean> {
@@ -84,7 +104,9 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.put<boolean>(`${this.baseUrl}/posts/edit/${id}`, body, {headers});
+    return this.http.put<boolean>(`${this.baseUrl}/posts/edit/${id}`, body, {
+      headers,
+    });
   }
 
   deletePost(id: number): Observable<boolean> {
@@ -92,7 +114,9 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.delete<boolean>(`${this.baseUrl}/posts/delete/${id}`, {headers});
+    return this.http.delete<boolean>(`${this.baseUrl}/posts/delete/${id}`, {
+      headers,
+    });
   }
 
   getMainPageImg(): Observable<string> {
