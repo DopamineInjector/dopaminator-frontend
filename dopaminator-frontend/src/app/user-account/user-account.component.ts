@@ -74,6 +74,7 @@ export class UserAccountComponent implements OnInit {
       this.apiService.getUser({username: this.userName}).subscribe(user => {
         this.user.name =  user.username;
         this.user.posts = user.posts;
+        this.user.money = user.walletBalance;
       });
     }
     this.currentUser = (this.userName == this.cookieService.get("username"));

@@ -25,6 +25,7 @@ export interface LoginResponse {
 export interface GetUserResponse {
   username: string;
   posts: [];
+  walletBalance: number;
 }
 
 export interface CreatePostRequest {
