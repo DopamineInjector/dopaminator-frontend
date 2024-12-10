@@ -15,6 +15,7 @@ import {
   CreateAuctionRequest,
   Auction,
   GetBalanceResponse,
+  TransferDopeRequest,
 } from '../types';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -195,5 +196,33 @@ export class ApiService {
         headers,
       })
       .pipe(map((blob) => URL.createObjectURL(blob)));
+  }
+
+  transferDope(request: TransferDopeRequest): Observable<void> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<void>(
+      `${Ednpoints.TRANSFER_DOPE_ENDPOINT}`,
+      request,
+      {
+        headers,
+      }
+    );
+  }
+
+  withdrawDope(request: { amount: number }): Observable<void> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<void>(
+      `${Ednpoints.WITHDRAW_DOPE_ENDPOINT}`,
+      request,
+      {
+        headers,
+      }
+    );
   }
 }

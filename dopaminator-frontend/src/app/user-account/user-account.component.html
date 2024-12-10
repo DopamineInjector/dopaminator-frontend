@@ -15,13 +15,25 @@
             <mat-icon>add</mat-icon>
           </button>
         </h2>
-        <h3 class="user-money" *ngIf="currentUser">
+        <h3 class="user-money" *ngIf="currentUser; else transfer">
           <div *ngIf="balance$ | async; let balance">
             Dopamine:
             <div>deposit: {{ balance.depositBalance }}</div>
             <div>blockchain: {{ balance.blockchainBalance }}</div>
+            <button mat-button class="dope-button" (click)="withdraw()">
+              Withdraw deposit
+            </button>
           </div>
         </h3>
+        <ng-template #transfer>
+          <button
+            mat-button
+            class="dope-button"
+            (click)="transferBalance(user.username)"
+          >
+            Transfer blockchain balance
+          </button>
+        </ng-template>
       </div>
     </div>
 

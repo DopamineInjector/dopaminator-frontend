@@ -13,6 +13,16 @@ export interface Auction {
   username: string;
 }
 
+export interface TransferDopeRequest {
+  amount: number;
+  recipient: string;
+}
+
+export interface TransferModalContext {
+  title: string;
+  buttonLabel: string;
+}
+
 export interface BigWinModalContext {
   name: string;
   image: Blob;
@@ -61,6 +71,7 @@ export interface LoginResponse {
 }
 
 export interface GetUserResponse {
+  id: string;
   username: string;
   posts: Post[];
 }
@@ -118,6 +129,8 @@ export enum Ednpoints {
   GET_BALANCE_ENDPOINT = `${baseApiUrl}/blockchain/balance`,
   GET_USER_NFTS_ENDPOINT = `${baseApiUrl}/blockchain/nfts`,
   CREATE_AUCTION_ENDPOINT = `${baseApiUrl}/blockchain/sell`,
+  TRANSFER_DOPE_ENDPOINT = `${baseApiUrl}/blockchain/transfer`,
+  WITHDRAW_DOPE_ENDPOINT = `${baseApiUrl}/blockchain/withdraw`,
   BUY_NFT_ENDPOINT = `${baseApiUrl}/blockchain/buy`,
   GET_AUCTIONS_ENDPOINT = `${baseApiUrl}/blockchain/auctions`,
   SPIN_ENDPOINT = `${baseApiUrl}/gambling/spin`,

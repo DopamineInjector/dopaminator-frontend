@@ -13,9 +13,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPostDialogComponent } from '../add-post-dialog/add-post-dialog.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { GetBalanceResponse, GetUserResponse, Post } from '../types';
+import {
+  GetBalanceResponse,
+  GetUserResponse,
+  Post,
+  TransferModalContext,
+} from '../types';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserInventoryComponent } from '../components/user-inventory/user-inventory.component';
+import { TransferModalComponent } from '../components/transfer-modal/transfer-modal.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-user-account',
@@ -48,7 +55,8 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
   constructor(
     private cookieService: CookieService,
     private apiService: ApiService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -119,6 +127,59 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
         this.loadUserData();
+      });
+  }
+
+  transferBalance(userId: string) {
+    const context: TransferModalContext = {
+      title: '$$$ Transfer some dope $$$',
+      buttonLabel: 'Transfer',
+    };
+    const dialogRef = this.dialog.open(TransferModalComponent, {
+      width: '400px',
+      data: context,
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((result: { amount: number }) => {
+        if (result && result.amount) {
+          this.apiService
+            .transferDope({ recipient: userId, amount: result.amount })
+            .subscribe({
+              next: () =>
+                this.notificationService.success('Transfer succesfull'),
+              error: () =>
+                this.notificationService.error(
+                  'There was an error while processing your transfer'
+                ),
+            });
+        }
+      });
+  }
+
+  withdraw() {
+    const context: TransferModalContext = {
+      title: '$$$ Withdraw some dope $$$',
+      buttonLabel: 'Withdraw',
+    };
+    const dialogRef = this.dialog.open(TransferModalComponent, {
+      width: '400px',
+      data: context,
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((result: { amount: number }) => {
+        if (result && result.amount) {
+          this.apiService.withdrawDope({ amount: result.amount }).subscribe({
+            next: () => this.notificationService.success('Withdraw succesfull'),
+            error: () =>
+              this.notificationService.error(
+                'There was an error while processing your withdraw'
+              ),
+          });
+        }
       });
   }
 }
