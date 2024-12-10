@@ -120,9 +120,9 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
       });
   }
 
-  deletePost(id: string) {
+  buyPost(id: string) {
     this.apiService
-      .deletePost(id)
+      .buyPost(id)
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
         this.loadUserData();

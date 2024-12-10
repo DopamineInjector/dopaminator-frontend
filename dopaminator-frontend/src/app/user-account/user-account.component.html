@@ -66,15 +66,13 @@
                 <button
                   mat-button
                   class="dope-button"
-                  *ngIf="currentUser"
-                  (click)="deletePost(post.id)"
+                  *ngIf="!post.isOwned && !currentUser"
+                  (click)="buyPost(post.id)"
                 >
-                  Delete
-                  <mat-icon>delete</mat-icon>
+                  Buy post for {{ post.price }}dope
                 </button>
               </div>
-              <p class="post-description">{{ post.content }}</p>
-              <!-- <img [src]="post.imageUrl" alt="Post Image" class="post-image" /> -->
+              <img [src]="'data:image/png;base64, ' + post.content" />
             </div>
           </div>
         </div>

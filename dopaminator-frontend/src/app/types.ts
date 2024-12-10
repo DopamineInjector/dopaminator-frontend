@@ -148,6 +148,6 @@ export enum Ednpoints {
   SPIN_ENDPOINT = `${baseApiUrl}/gambling/spin`,
   CREATE_POST_ENDPOINT = `${baseApiUrl}/posts/create`,
   EDIT_POST_ENDPOINT = `${baseApiUrl}/posts/edit`,
-  DELETE_POST_ENDPOINT = `${baseApiUrl}/posts/delete`,
+  BUY_POST_ENDPOINT = `${baseApiUrl}/posts/buy`,
   MAIN_PAGE_IMG_ENDPOINT = `${baseApiUrl}/users/main`,
 }

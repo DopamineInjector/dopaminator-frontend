@@ -172,17 +172,14 @@ export class ApiService {
     );
   }
 
-  deletePost(id: string): Observable<boolean> {
+  buyPost(id: string): Observable<void> {
     const token = this.cookieService.get('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.delete<boolean>(
-      `${Ednpoints.DELETE_POST_ENDPOINT}/${id}`,
-      {
-        headers,
-      }
-    );
+    return this.http.put<void>(`${Ednpoints.BUY_POST_ENDPOINT}/${id}`, {
+      headers,
+    });
   }
 
   getMainPageImg(): Observable<string> {
