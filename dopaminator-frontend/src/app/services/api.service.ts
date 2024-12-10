@@ -225,4 +225,14 @@ export class ApiService {
       }
     );
   }
+
+  depositDope(request: { amount: number }): Observable<void> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<void>(`${Ednpoints.DEPOSIT_DOPE_ENDPOINT}`, request, {
+      headers,
+    });
+  }
 }

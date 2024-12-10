@@ -39,6 +39,7 @@ export class TransferModalComponent implements OnInit {
   transfer(): void {
     if (this.amount.value == null || this.amount.value < 0) {
       this.notificationsService.error('Amount must be a positive number');
+      return;
     }
     this.dialogRef.close({ amount: this.amount.value });
   }

@@ -23,6 +23,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { UserInventoryComponent } from '../components/user-inventory/user-inventory.component';
 import { TransferModalComponent } from '../components/transfer-modal/transfer-modal.component';
 import { NotificationService } from '../services/notification.service';
+import { BalanceChangeService } from '../services/balanceChange.service';
 
 @Component({
   selector: 'app-user-account',
@@ -56,7 +57,8 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
     private cookieService: CookieService,
     private apiService: ApiService,
     private dialog: MatDialog,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private balanceChangeService: BalanceChangeService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -147,12 +149,17 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
           this.apiService
             .transferDope({ recipient: userId, amount: result.amount })
             .subscribe({
-              next: () =>
-                this.notificationService.success('Transfer succesfull'),
-              error: () =>
-                this.notificationService.error(
-                  'There was an error while processing your transfer'
-                ),
+              next: () => {
+                this.notificationService.success('Transfer succesfull');
+                this.balanceChangeService.balanceChanged();
+              },
+              error: (e) => {
+                if (e.error && e.error.message) {
+                  this.notificationService.error(e.error.message);
+                } else {
+                  this.notificationService.error('An unknown error occurred');
+                }
+              },
             });
         }
       });
@@ -173,11 +180,48 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
       .subscribe((result: { amount: number }) => {
         if (result && result.amount) {
           this.apiService.withdrawDope({ amount: result.amount }).subscribe({
-            next: () => this.notificationService.success('Withdraw succesfull'),
-            error: () =>
-              this.notificationService.error(
-                'There was an error while processing your withdraw'
-              ),
+            next: () => {
+              this.notificationService.success('Withdraw succesfull');
+              this.balanceChangeService.balanceChanged();
+            },
+            error: (e) => {
+              if (e.error && e.error.message) {
+                this.notificationService.error(e.error.message);
+              } else {
+                this.notificationService.error('An unknown error occurred');
+              }
+            },
+          });
+        }
+      });
+  }
+
+  deposit() {
+    const context: TransferModalContext = {
+      title: '$$$ Deposit some dope $$$',
+      buttonLabel: 'Deposit',
+    };
+    const dialogRef = this.dialog.open(TransferModalComponent, {
+      width: '400px',
+      data: context,
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((result: { amount: number }) => {
+        if (result && result.amount) {
+          this.apiService.depositDope({ amount: result.amount }).subscribe({
+            next: () => {
+              this.notificationService.success('Deposit succesfull');
+              this.balanceChangeService.balanceChanged();
+            },
+            error: (e) => {
+              if (e.error && e.error.message) {
+                this.notificationService.error(e.error.message);
+              } else {
+                this.notificationService.error('An unknown error occurred');
+              }
+            },
           });
         }
       });

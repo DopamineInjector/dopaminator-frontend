@@ -28,6 +28,11 @@
 
 .user-money {
   font-size: 1.2em;
+
+  &__button-container {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .no-posts-message {

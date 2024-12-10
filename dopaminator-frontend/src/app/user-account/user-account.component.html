@@ -20,16 +20,21 @@
             Dopamine:
             <div>deposit: {{ balance.depositBalance }}</div>
             <div>blockchain: {{ balance.blockchainBalance }}</div>
-            <button mat-button class="dope-button" (click)="withdraw()">
-              Withdraw deposit
-            </button>
+            <div class="user-money__buttons-container">
+              <button mat-button class="dope-button" (click)="withdraw()">
+                Withdraw
+              </button>
+              <button mat-button class="dope-button" (click)="withdraw()">
+                Deposit
+              </button>
+            </div>
           </div>
         </h3>
         <ng-template #transfer>
           <button
             mat-button
             class="dope-button"
-            (click)="transferBalance(user.username)"
+            (click)="transferBalance(user.id)"
           >
             Transfer blockchain balance
           </button>

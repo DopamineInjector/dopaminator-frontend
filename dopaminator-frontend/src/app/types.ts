@@ -131,6 +131,7 @@ export enum Ednpoints {
   CREATE_AUCTION_ENDPOINT = `${baseApiUrl}/blockchain/sell`,
   TRANSFER_DOPE_ENDPOINT = `${baseApiUrl}/blockchain/transfer`,
   WITHDRAW_DOPE_ENDPOINT = `${baseApiUrl}/blockchain/withdraw`,
+  DEPOSIT_DOPE_ENDPOINT = `${baseApiUrl}/blockchain/deposit`,
   BUY_NFT_ENDPOINT = `${baseApiUrl}/blockchain/buy`,
   GET_AUCTIONS_ENDPOINT = `${baseApiUrl}/blockchain/auctions`,
   SPIN_ENDPOINT = `${baseApiUrl}/gambling/spin`,
