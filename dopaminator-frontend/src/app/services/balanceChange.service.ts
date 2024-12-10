@@ -8,6 +8,7 @@ export class BalanceChangeService {
   balanceChanged$ = new Subject<void>();
 
   balanceChanged() {
+    console.log('balance changed');
     this.balanceChanged$.next();
   }
 

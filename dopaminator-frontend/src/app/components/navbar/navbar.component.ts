@@ -5,7 +5,6 @@ import {
   Input,
   OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +13,13 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { GetBalanceResponse, Views } from '../../types';
 import { NotificationService } from '../../services/notification.service';
 import { ApiService } from '../../services/api.service';
-import { combineLatestWith, Observable, Subject, switchMap } from 'rxjs';
+import {
+  combineLatestWith,
+  mergeWith,
+  Observable,
+  Subject,
+  switchMap,
+} from 'rxjs';
 import { BalanceChangeService } from '../../services/balanceChange.service';
 
 @Component({
@@ -54,13 +59,13 @@ export class NavbarComponent implements OnChanges {
   ngOnInit() {
     this.balanceChangedService.balanceChanged();
     this.balance$ = this.balanceChangedService.getBalanceChanged$().pipe(
-      combineLatestWith(this.usernameChanged$.asObservable()),
+      mergeWith(this.usernameChanged$.asObservable()),
       switchMap(() => this.apiService.getBalance())
     );
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['username'] && this.username) {
+  ngOnChanges() {
+    if (this.username) {
       this.usernameChanged$.next();
     }
   }
