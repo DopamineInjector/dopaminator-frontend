@@ -177,7 +177,7 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.put<void>(`${Ednpoints.BUY_POST_ENDPOINT}/${id}`, {
+    return this.http.put<void>(`${Ednpoints.BUY_POST_ENDPOINT}/${id}`, null, {
       headers,
     });
   }

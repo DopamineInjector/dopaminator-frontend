@@ -126,6 +126,7 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
         this.loadUserData();
+        this.balanceChangeService.balanceChanged();
       });
   }
 
