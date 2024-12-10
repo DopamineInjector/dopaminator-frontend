@@ -1,27 +1,42 @@
-<h2 mat-dialog-title>Dodaj Post</h2>
-
-<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-  <div class="add-post-dialog__form-container">
-    <mat-form-field appearance="fill" class="add-post-dialog__input">
-      <mat-label>Tytuł</mat-label>
-      <input matInput formControlName="title" required />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="add-post-dialog__input">
-      <mat-label>Treść</mat-label>
-      <textarea matInput formControlName="content" required></textarea>
-    </mat-form-field>
+<card-component [title]="this.isEditing ? 'Edit post' : 'Add post'">
+  <div content class="img-container">
+    <div class="add-post-dialog__form-container">
+      <mat-form-field
+        *ngIf="!isEditing"
+        appearance="fill"
+        class="add-post-dialog__input"
+      >
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [formControl]="title" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="add-post-dialog__input">
+        <mat-label>Price</mat-label>
+        <input matInput type="numeric" [formControl]="price" required />
+      </mat-form-field>
+    </div>
+    <div *ngIf="!isEditing">
+      <button mat-button class="dope-button" (click)="fileInput.click()">
+        Upload file
+      </button>
+      <input
+        #fileInput
+        type="file"
+        (change)="onFileSelected($event)"
+        style="display: none"
+      />
+      <div *ngIf="content">
+        <p>Wybrano plik: {{ content!.name }}</p>
+      </div>
+    </div>
   </div>
-
-  <div mat-dialog-actions>
-    <button mat-button class="dope-button" (click)="onCancel()">Anuluj</button>
+  <div action class="spin-action-button">
+    <button mat-button class="dope-button" (click)="onCancel()">Close</button>
     <button
-      mat-raised-button
+      mat-button
       class="dope-button"
-      type="submit"
-      [disabled]="postForm.invalid"
+      (click)="isEditing ? editPost() : createPost()"
     >
-      Zatwierdź
+      {{ isEditing ? "Edit post" : "Add post" }}
     </button>
   </div>
-</form>
+</card-component>

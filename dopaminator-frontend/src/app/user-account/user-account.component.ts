@@ -14,6 +14,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPostDialogComponent } from '../add-post-dialog/add-post-dialog.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import {
+  CreatePostRequest,
   GetBalanceResponse,
   GetUserResponse,
   Post,
@@ -85,18 +86,17 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
   addPost() {
     const dialogRef = this.dialog.open(AddPostDialogComponent, {
       width: '400px',
+      data: { isEditing: false },
     });
 
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe((result) => {
+      .subscribe((result: CreatePostRequest) => {
         if (result) {
-          this.apiService
-            .addPost({ title: result.title, content: result.content })
-            .subscribe(() => {
-              this.loadUserData();
-            });
+          this.apiService.addPost(result).subscribe(() => {
+            this.loadUserData();
+          });
         }
       });
   }
@@ -104,18 +104,15 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
   editPost(post: Post) {
     const dialogRef = this.dialog.open(AddPostDialogComponent, {
       width: '400px',
-      data: {
-        title: post.title,
-        content: post.content,
-      },
+      data: { isEditing: true },
     });
     dialogRef
       .afterClosed()
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe((result) => {
+      .subscribe((result: { price: number }) => {
         if (result) {
           this.apiService
-            .editPost(post.id, { title: result.title, content: result.content })
+            .editPost(post.id, { price: result.price })
             .subscribe(() => {
               this.loadUserData();
             });
@@ -123,7 +120,7 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
       });
   }
 
-  deletePost(id: number) {
+  deletePost(id: string) {
     this.apiService
       .deletePost(id)
       .pipe(takeUntil(this.componentDestroyed$))

@@ -79,13 +79,19 @@ export interface GetUserResponse {
 export interface CreatePostRequest {
   title: string;
   content: string;
+  price: number;
+}
+
+export interface EditPostRequest {
+  price: number;
 }
 
 export interface Post {
-  id: number;
+  id: string;
   title: string;
-  content: string;
-  imageUrl: string;
+  content: Blob;
+  price: number;
+  isOwned: boolean;
 }
 
 export interface SpinResponse {

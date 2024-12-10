@@ -16,6 +16,7 @@ import {
   Auction,
   GetBalanceResponse,
   TransferDopeRequest,
+  EditPostRequest,
 } from '../types';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -157,7 +158,7 @@ export class ApiService {
     });
   }
 
-  editPost(id: number, body: CreatePostRequest): Observable<boolean> {
+  editPost(id: string, body: EditPostRequest): Observable<boolean> {
     const token = this.cookieService.get('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
@@ -171,7 +172,7 @@ export class ApiService {
     );
   }
 
-  deletePost(id: number): Observable<boolean> {
+  deletePost(id: string): Observable<boolean> {
     const token = this.cookieService.get('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
