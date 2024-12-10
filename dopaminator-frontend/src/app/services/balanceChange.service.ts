@@ -10,4 +10,8 @@ export class BalanceChangeService {
   balanceChanged() {
     this.balanceChanged$.next();
   }
+
+  getBalanceChanged$() {
+    return this.balanceChanged$.asObservable();
+  }
 }

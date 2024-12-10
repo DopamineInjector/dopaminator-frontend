@@ -53,8 +53,8 @@ export class NavbarComponent implements OnChanges {
 
   ngOnInit() {
     this.balanceChangedService.balanceChanged();
-    this.balance$ = this.balanceChangedService.balanceChanged$.pipe(
-      combineLatestWith(this.usernameChanged$),
+    this.balance$ = this.balanceChangedService.getBalanceChanged$().pipe(
+      combineLatestWith(this.usernameChanged$.asObservable()),
       switchMap(() => this.apiService.getBalance())
     );
   }
