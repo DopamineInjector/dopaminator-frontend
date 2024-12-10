@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Fruits, SpinResponse } from '../../types';
+import { Fruits, SlotsSounds, SpinResponse } from '../../types';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +18,9 @@ import { BalanceChangeService } from '../../services/balanceChange.service';
   styleUrl: './slots-page.component.scss',
 })
 export class SlotsPageComponent implements OnInit {
+  spinAudio = new Audio();
+  winAudio = new Audio();
+
   numberOfFruits = 7;
   loops = 10;
   fruitsIterator: Number[] = [];
@@ -72,7 +75,7 @@ export class SlotsPageComponent implements OnInit {
         this.secondFruitSpinTime,
         this.thirdFruitSpinTime
       );
-
+      this.playSpinSound();
       this.apiService
         .spin()
         .pipe(takeUntil(this.componentDestroyed$))
@@ -87,6 +90,7 @@ export class SlotsPageComponent implements OnInit {
             this.isSpinning = true;
             setTimeout(() => {
               this.canSpin = true;
+              this.playWinSound();
               if (result.isWin) {
                 this.openBigWinModal(result);
               }
@@ -105,9 +109,13 @@ export class SlotsPageComponent implements OnInit {
   }
 
   randomizeSpinTimers() {
-    this.firstFruitSpinTime = Math.floor(Math.random() * 6) + 3;
-    this.secondFruitSpinTime = Math.floor(Math.random() * 6) + 3;
-    this.thirdFruitSpinTime = Math.floor(Math.random() * 6) + 3;
+    const fixedTimeFruitIdx = Math.floor(Math.random() * 3);
+    this.firstFruitSpinTime =
+      fixedTimeFruitIdx == 0 ? 9 : Math.floor(Math.random() * 6) + 3;
+    this.secondFruitSpinTime =
+      fixedTimeFruitIdx == 1 ? 9 : Math.floor(Math.random() * 6) + 3;
+    this.thirdFruitSpinTime =
+      fixedTimeFruitIdx == 2 ? 9 : Math.floor(Math.random() * 6) + 3;
   }
 
   setWinningPositions() {
@@ -141,5 +149,17 @@ export class SlotsPageComponent implements OnInit {
       width: '400px',
       data: result,
     });
+  }
+
+  playSpinSound(): void {
+    this.spinAudio.src = SlotsSounds.SPIN;
+    this.spinAudio.load();
+    this.spinAudio.play();
+  }
+
+  playWinSound(): void {
+    this.winAudio.src = SlotsSounds.WIN;
+    this.winAudio.load();
+    this.winAudio.play();
   }
 }

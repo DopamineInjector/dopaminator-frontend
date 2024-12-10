@@ -119,6 +119,11 @@ export enum Fruits {
   STRAWBERRY = '/fruits/strawberry.png',
 }
 
+export enum SlotsSounds {
+  SPIN = '/sounds/spin.mp3',
+  WIN = '/sounds/win.mp3',
+}
+
 const baseApiUrl = 'http://localhost:5264/api';
 
 export enum Ednpoints {
