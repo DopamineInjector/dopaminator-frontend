@@ -16,7 +16,11 @@
           </button>
         </h2>
         <h3 class="user-money" *ngIf="currentUser">
-          Dopamine: {{ balance$ | async }}
+          <div *ngIf="balance$ | async; let balance">
+            Dopamine:
+            <div>deposit: {{ balance.depositBalance }}</div>
+            <div>blockchain: {{ balance.blockchainBalance }}</div>
+          </div>
         </h3>
       </div>
     </div>

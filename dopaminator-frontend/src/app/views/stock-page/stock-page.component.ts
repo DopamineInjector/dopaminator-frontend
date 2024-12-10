@@ -15,7 +15,7 @@ import {
   Subject,
 } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
-import { Auction } from '../../types';
+import { Auction, GetBalanceResponse } from '../../types';
 import { AuctionComponent } from '../../components/auction/auction.component';
 import { StringLiteral } from 'typescript';
 

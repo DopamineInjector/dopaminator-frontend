@@ -6,6 +6,7 @@ import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 import { Router, RouterModule } from '@angular/router';
+import { BalanceChangeService } from '../../services/balanceChange.service';
 
 @Component({
   selector: 'auction',
@@ -24,7 +25,8 @@ export class AuctionComponent implements OnDestroy {
   constructor(
     private apiService: ApiService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private balanceChangedService: BalanceChangeService
   ) {}
 
   ngOnDestroy(): void {
@@ -38,6 +40,7 @@ export class AuctionComponent implements OnDestroy {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
         next: () => {
+          this.balanceChangedService.balanceChanged();
           this.notificationService.success('NFT bought');
           this.router.navigate([Views.STOCK_PAGE], {
             state: { username: this.username },

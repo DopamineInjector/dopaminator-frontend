@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPostDialogComponent } from '../add-post-dialog/add-post-dialog.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { GetUserResponse, Post } from '../types';
+import { GetBalanceResponse, GetUserResponse, Post } from '../types';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserInventoryComponent } from '../components/user-inventory/user-inventory.component';
 
@@ -36,7 +36,7 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
 
   user$: Observable<GetUserResponse> | undefined;
 
-  balance$: Observable<Number> | undefined;
+  balance$: Observable<GetBalanceResponse> | undefined;
 
   placeholderAvatar: string =
     'https://cdn0.iconfinder.com/data/icons/gambling-48/512/gambler-bet-gambling-casino-avatar-512.png';

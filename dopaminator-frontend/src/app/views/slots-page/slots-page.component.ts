@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BigWinModalComponent } from '../../components/big-win-modal/big-win-modal.component';
+import { BalanceChangeService } from '../../services/balanceChange.service';
 
 @Component({
   selector: 'slots-page',
@@ -40,7 +41,8 @@ export class SlotsPageComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private balanceChangedService: BalanceChangeService
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +78,7 @@ export class SlotsPageComponent implements OnInit {
         .pipe(takeUntil(this.componentDestroyed$))
         .subscribe({
           next: (result) => {
+            this.balanceChangedService.balanceChanged();
             if (result.isWin) {
               this.setWinningPositions();
             } else {

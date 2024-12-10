@@ -1,3 +1,8 @@
+export interface GetBalanceResponse {
+  blockchainBalance: number;
+  depositBalance: number;
+}
+
 export interface Auction {
   id: number;
   userId: number;

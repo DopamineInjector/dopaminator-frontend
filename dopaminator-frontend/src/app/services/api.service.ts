@@ -14,6 +14,7 @@ import {
   Ednpoints,
   CreateAuctionRequest,
   Auction,
+  GetBalanceResponse,
 } from '../types';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -75,16 +76,17 @@ export class ApiService {
     );
   }
 
-  getBalance(): Observable<number> {
+  getBalance(): Observable<GetBalanceResponse> {
     const token = this.cookieService.get('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http
-      .get<{ balance: number }>(`${Ednpoints.GET_BALANCE_ENDPOINT}`, {
+    return this.http.get<GetBalanceResponse>(
+      `${Ednpoints.GET_BALANCE_ENDPOINT}`,
+      {
         headers,
-      })
-      .pipe(map((response) => response.balance));
+      }
+    );
   }
 
   getUserNfts(username: string): Observable<GetNftsResponse> {
