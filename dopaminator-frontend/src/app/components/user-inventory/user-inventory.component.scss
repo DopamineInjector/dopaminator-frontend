@@ -1,0 +1,30 @@
+@import "../../../styles.scss";
+.user-inventory {
+  &__nft-tile {
+    display: flex;
+    flex-direction: column;
+    border-color: $gold;
+    border-radius: $base-padding;
+    border-width: 1px;
+    padding: $base-padding-2x;
+    border-style: solid;
+    align-items: center;
+    margin: $base-padding;
+
+    &:hover {
+      background-color: #121f13;
+      transition: background-color 0.3s ease-in-out;
+    }
+  }
+
+  &__nft-image {
+    width: 200px;
+    border-radius: $base-padding-2x;
+  }
+
+  &__nft-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: $base-padding-2x;
+  }
+}

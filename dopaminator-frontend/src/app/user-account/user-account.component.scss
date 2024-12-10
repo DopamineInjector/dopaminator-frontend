@@ -1,61 +1,70 @@
+@import "../../styles.scss";
+
 .user-account {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .user-avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-  
-  .user-name {
-    font-size: 1.8em;
-    font-weight: bold;
-  }
+  width: 100%;
+  padding: $base-padding-2x;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .user-money {
-    font-size: 1.2em;
-  }
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: $base-padding-2x;
+}
 
-  .no-posts-message {
-    font-size: 1.4em;
-  }
-  
-  .user-posts {
-    margin-top: 20px;
-  }
-  
-  .post {
-    display: flex;
-    align-items: flex-start;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-  }
-  
-  .post-image {
-    margin-right: 15px;
-    object-fit: cover;
-  }
-  
-  .post-content {
-    flex-grow: 1;
-  }
-  
-  .post-title {
-    font-size: 1.4em;
-    margin: 0 0 10px;
-  }
-  
-  .post-description {
-    color: #555;
-  }
-  
+.user-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.user-name {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.user-money {
+  font-size: 1.2em;
+}
+
+.no-posts-message {
+  font-size: 1.4em;
+}
+
+.user-posts {
+  margin-top: $base-padding-2x;
+}
+
+.post {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #ddd;
+  padding: $base-padding-2x 0;
+}
+
+.post-image {
+  margin-right: $base-padding-2x;
+  object-fit: cover;
+}
+
+.post-title {
+  font-size: 1.4em;
+  display: flex;
+}
+
+.post-description {
+  color: #555;
+}
+
+.user-account__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.account-tab-group {
+  width: 90%;
+}

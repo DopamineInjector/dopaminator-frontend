@@ -1,15 +1,36 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  MatFormField,
+  MatFormFieldModule,
+  MatLabel,
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-add-post-dialog',
   templateUrl: './add-post-dialog.component.html',
-  imports: [ReactiveFormsModule, MatLabel, MatFormFieldModule, MatDialogModule, MatInputModule],
+  imports: [
+    ReactiveFormsModule,
+    MatLabel,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   styleUrls: ['./add-post-dialog.component.scss'],
-  standalone: true
+  standalone: true,
 })
 export class AddPostDialogComponent {
   postForm: FormGroup;
@@ -21,7 +42,7 @@ export class AddPostDialogComponent {
   ) {
     this.postForm = this.fb.group({
       title: [data?.title || '', Validators.required],
-      content: [data?.content || '', Validators.required]
+      content: [data?.content || '', Validators.required],
     });
   }
 

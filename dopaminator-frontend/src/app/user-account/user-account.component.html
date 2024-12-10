@@ -1,4 +1,4 @@
-<ng-container *ngIf="user$">
+<div *ngIf="user$" class="user-account__container">
   <div class="user-account" *ngIf="user$ | async; let user">
     <div class="user-info">
       <img [src]="placeholderAvatar" alt="User Avatar" class="user-avatar" />
@@ -6,11 +6,12 @@
         <h2 class="user-name">
           {{ user.username }}
           <button
-            mat-stroked-button
-            color="accent"
+            mat-button
+            class="dope-button"
             *ngIf="currentUser"
             (click)="addPost()"
           >
+            Add post
             <mat-icon>add</mat-icon>
           </button>
         </h2>
@@ -20,37 +21,49 @@
       </div>
     </div>
 
-    <div class="user-posts">
-      <h3>User's posts:</h3>
-      <div class="no-posts-message" *ngIf="!user.posts.length">
-        Nothing to show
-      </div>
-
-      <div class="post" *ngFor="let post of user.posts">
-        <div class="post-content">
-          <div class="post-title">
-            <h4>{{ post.title }}</h4>
-            <button
-              mat-stroked-button
-              color="accent"
-              *ngIf="currentUser"
-              (click)="editPost(post)"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              mat-stroked-button
-              color="accent"
-              *ngIf="currentUser"
-              (click)="deletePost(post.id)"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
+    <mat-tab-group class="account-tab-group">
+      <mat-tab label="Posts">
+        <div class="user-posts">
+          <h3>User's posts:</h3>
+          <div class="no-posts-message" *ngIf="!user.posts.length">
+            Nothing to show
           </div>
-          <p class="post-description">{{ post.content }}</p>
-          <!-- <img [src]="post.imageUrl" alt="Post Image" class="post-image" /> -->
+
+          <div class="post" *ngFor="let post of user.posts">
+            <div class="post-content">
+              <div class="post-title">
+                <h4>{{ post.title }}</h4>
+                <button
+                  mat-button
+                  class="dope-button"
+                  *ngIf="currentUser"
+                  (click)="editPost(post)"
+                >
+                  Edit
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-button
+                  class="dope-button"
+                  *ngIf="currentUser"
+                  (click)="deletePost(post.id)"
+                >
+                  Delete
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              <p class="post-description">{{ post.content }}</p>
+              <!-- <img [src]="post.imageUrl" alt="Post Image" class="post-image" /> -->
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </mat-tab>
+      <mat-tab label="Inventory"
+        ><user-inventory
+          [username]="username!"
+          [isMine]="currentUser"
+        ></user-inventory>
+      </mat-tab>
+    </mat-tab-group>
   </div>
-</ng-container>
+</div>

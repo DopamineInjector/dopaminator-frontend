@@ -1,0 +1,12 @@
+@import "../../../styles.scss";
+
+.stock-page {
+  &__search-form-field {
+    width: 100%;
+  }
+
+  &__auctions-container {
+    display: flex;
+    gap: $base-padding-2x;
+  }
+}

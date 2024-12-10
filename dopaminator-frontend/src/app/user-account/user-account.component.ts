@@ -14,12 +14,21 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPostDialogComponent } from '../add-post-dialog/add-post-dialog.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { GetUserResponse, Post } from '../types';
+import { MatTabsModule } from '@angular/material/tabs';
+import { UserInventoryComponent } from '../components/user-inventory/user-inventory.component';
 
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.scss'],
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatTabsModule,
+    UserInventoryComponent,
+  ],
   standalone: true,
 })
 export class UserAccountComponent implements OnChanges, OnDestroy {

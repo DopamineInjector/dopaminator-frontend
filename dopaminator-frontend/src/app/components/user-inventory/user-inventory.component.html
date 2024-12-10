@@ -1,0 +1,11 @@
+<div *ngIf="nfts$ | async; let nfts" class="user-inventory__nft-container">
+  <div *ngFor="let nft of nfts.nfts">
+    <div class="user-inventory__nft-tile" (click)="openBigWinModal(nft)">
+      <img
+        class="user-inventory__nft-image"
+        [src]="'data:image/png;base64, ' + nft.image"
+      />
+      <h3>{{ nft.description }}</h3>
+    </div>
+  </div>
+</div>

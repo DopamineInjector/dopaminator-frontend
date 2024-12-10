@@ -1,9 +1,23 @@
 <card-component [title]="'$$$ BIG WIN $$$'">
   <div content class="img-container">
     <img [src]="'data:image/png;base64, ' + image" />
-    <span>{{ name }}</span>
+    <div>{{ name }}</div>
+    <div class="add-post-dialog__form-container" *ngIf="displaySellButton">
+      <mat-form-field appearance="fill" class="add-post-dialog__input">
+        <mat-label>Price</mat-label>
+        <input matInput type="numeric" [formControl]="price" required />
+      </mat-form-field>
+    </div>
   </div>
   <div action class="spin-action-button">
-    <button mat-button class="dope-button" (click)="close()">Ok</button>
+    <button mat-button class="dope-button" (click)="close()">Close</button>
+    <button
+      *ngIf="displaySellButton"
+      mat-button
+      class="dope-button"
+      (click)="createAuction()"
+    >
+      Sell
+    </button>
   </div>
 </card-component>

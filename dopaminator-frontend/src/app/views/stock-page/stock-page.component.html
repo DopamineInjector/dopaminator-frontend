@@ -1,24 +1,19 @@
-<card-component [title]="'Accounts'">
+<card-component [title]="'Stock'">
   <div content>
-    <mat-form-field class="accounts-page__search-form-field">
+    <mat-form-field class="stock-page__search-form-field">
       <mat-label>Search for offers:</mat-label>
-      <input
-        type="text"
-        matInput
-        [formControl]="searchedUsernameControl"
-        (keyup.enter)="searchUser()"
-      />
-      <button
-        matSuffix
-        mat-icon-button
-        aria-label="Clear"
-        (click)="searchUser()"
-      >
-        <mat-icon>search</mat-icon>
-      </button>
+      <input type="text" matInput [formControl]="searchedText" />
     </mat-form-field>
-    <mat-error *ngIf="displayNoUserError">
-      <strong>User does not exist</strong>
-    </mat-error>
+    <div
+      *ngIf="auctions$ | async; let auctions"
+      class="stock-page__auctions-container"
+    >
+      <auction
+        *ngFor="let auction of auctions"
+        [auction]="auction"
+        [isMine]="auction.username == username"
+        [username]="username"
+      ></auction>
+    </div>
   </div>
 </card-component>

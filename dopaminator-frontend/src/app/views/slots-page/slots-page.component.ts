@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { Fruits, SpinResponse } from '../../types';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../components/card/card.component';
@@ -13,13 +12,7 @@ import { BigWinModalComponent } from '../../components/big-win-modal/big-win-mod
 @Component({
   selector: 'slots-page',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    CardComponent,
-    MatButtonModule,
-    MatDialogModule,
-  ],
+  imports: [CommonModule, CardComponent, MatButtonModule, MatDialogModule],
   templateUrl: './slots-page.component.html',
   styleUrl: './slots-page.component.scss',
 })

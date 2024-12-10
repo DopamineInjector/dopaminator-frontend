@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserAccountComponent } from '../../user-account/user-account.component';
 import { CardComponent } from '../../components/card/card.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,8 +6,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ApiService } from '../../services/api.service';
-import { Subject } from 'rxjs';
+import {
+  combineLatestWith,
+  map,
+  mergeWith,
+  Observable,
+  of,
+  Subject,
+} from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { Auction } from '../../types';
+import { AuctionComponent } from '../../components/auction/auction.component';
+import { StringLiteral } from 'typescript';
 
 @Component({
   selector: 'app-stock-page',
@@ -22,33 +31,37 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatIconModule,
     CardComponent,
+    AuctionComponent,
   ],
   templateUrl: './stock-page.component.html',
   styleUrl: './stock-page.component.scss',
 })
 export class StockPageComponent implements OnInit {
-  username: string | null = '';
-
-  searchedUsernameControl = new FormControl<string>('');
-
-  displayNoUserError: boolean = false;
+  searchedText = new FormControl<string>('');
 
   componentDestroyed$ = new Subject<void>();
+
+  auctions$!: Observable<Auction[]>;
+
+  username!: string;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.username = history.state.username;
+    this.auctions$ = this.apiService.getAuctions().pipe(
+      combineLatestWith(this.valueChangesWithInitialValue(this.searchedText)),
+      map(([auctions, searchedText]) =>
+        auctions.filter((auction) =>
+          auction.description.includes(searchedText ?? '')
+        )
+      )
+    );
   }
 
-  searchUser(): void {
-    this.apiService
-      .findUser({ username: this.searchedUsernameControl.value! })
-      .subscribe((exists) => {
-        this.displayNoUserError = !exists;
-        if (exists) {
-          this.username = this.searchedUsernameControl.value!;
-        }
-      });
+  valueChangesWithInitialValue(
+    control: FormControl<string | null>
+  ): Observable<string | null> {
+    return control.valueChanges.pipe(mergeWith(of(control.value)));
   }
 }

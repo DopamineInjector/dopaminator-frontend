@@ -1,20 +1,34 @@
 export interface Auction {
   id: number;
-  sellerId: number;
-  nftId: number;
-  nftDescription: string;
+  userId: number;
+  tokenId: number;
+  description: string;
   price: number;
+  image: Blob;
+  username: string;
 }
 
-export interface PostAuctionRequest {
-  nftId: number;
+export interface BigWinModalContext {
+  name: string;
+  image: Blob;
+  displaySellButton?: boolean;
+}
+
+export interface CreateAuctionRequest {
+  tokenId: number;
   price: number;
-  nftName: string;
+  description: string;
 }
 
 export interface Nft {
-  id: number;
+  id: string;
+  tokenId: number;
   description: string;
+  image: Blob;
+}
+
+export interface GetNftsResponse {
+  nfts: Nft[];
 }
 
 export interface SignupRequest {
@@ -70,6 +84,7 @@ export enum Views {
   SLOTS_PAGE = 'slots',
   SIGNUP_PAGE = 'signup',
   ACCOUNT_PAGE = 'account',
+  STOCK_PAGE = 'stock',
   NOT_FOUND_PAGE = '404',
 }
 
@@ -86,4 +101,23 @@ export enum Fruits {
   PINEAPPLE = '/fruits/pineapple.png',
   PLUM = '/fruits/plum.png',
   STRAWBERRY = '/fruits/strawberry.png',
+}
+
+const baseApiUrl = 'http://localhost:5264/api';
+
+export enum Ednpoints {
+  SIGNUP_ENDPOINT = `${baseApiUrl}/users/signup`,
+  LOGIN_ENDPOINT = `${baseApiUrl}/users/login`,
+  FIND_USER_ENDPOINT = `${baseApiUrl}/users/find`,
+  GET_USER_ENDPOINT = `${baseApiUrl}/users/get`,
+  GET_BALANCE_ENDPOINT = `${baseApiUrl}/blockchain/balance`,
+  GET_USER_NFTS_ENDPOINT = `${baseApiUrl}/blockchain/nfts`,
+  CREATE_AUCTION_ENDPOINT = `${baseApiUrl}/blockchain/sell`,
+  BUY_NFT_ENDPOINT = `${baseApiUrl}/blockchain/buy`,
+  GET_AUCTIONS_ENDPOINT = `${baseApiUrl}/blockchain/auctions`,
+  SPIN_ENDPOINT = `${baseApiUrl}/gambling/spin`,
+  CREATE_POST_ENDPOINT = `${baseApiUrl}/posts/create`,
+  EDIT_POST_ENDPOINT = `${baseApiUrl}/posts/edit`,
+  DELETE_POST_ENDPOINT = `${baseApiUrl}/posts/delete`,
+  MAIN_PAGE_IMG_ENDPOINT = `${baseApiUrl}/users/main`,
 }

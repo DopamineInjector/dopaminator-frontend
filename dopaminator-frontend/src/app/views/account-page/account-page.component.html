@@ -1,25 +1,27 @@
 <card-component [title]="'Accounts'">
   <div content>
-    <mat-form-field class="accounts-page__search-form-field">
-      <mat-label>Find other successfull gamblers:</mat-label>
-      <input
-        type="text"
-        matInput
-        [formControl]="searchedUsernameControl"
-        (keyup.enter)="searchUser()"
-      />
-      <button
-        matSuffix
-        mat-icon-button
-        aria-label="Clear"
-        (click)="searchUser()"
-      >
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
-    <mat-error *ngIf="displayNoUserError">
-      <strong>User does not exist</strong>
-    </mat-error>
+    <div class="accounts-page__search-container">
+      <mat-form-field class="accounts-page__search-form-field">
+        <mat-label>Find other successfull gamblers:</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="searchedUsernameControl"
+          (keyup.enter)="searchUser()"
+        />
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="searchUser()"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-error *ngIf="displayNoUserError">
+        <strong>User does not exist</strong>
+      </mat-error>
+    </div>
     <div *ngIf="username">
       <app-user-account [username]="username"></app-user-account>
     </div>

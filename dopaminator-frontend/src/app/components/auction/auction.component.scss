@@ -1,0 +1,20 @@
+@import "../../../styles.scss";
+
+.auction {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  border-radius: $base-padding-2x;
+  border-color: $gold-darkest;
+  border-width: 1px;
+  border-style: solid;
+  padding: $base-padding-2x;
+
+  &__img-container {
+    max-width: 200px;
+  }
+
+  &__img {
+    width: 100%;
+  }
+}

@@ -2,4 +2,10 @@
   &__search-form-field {
     width: 80%;
   }
+
+  &__search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }

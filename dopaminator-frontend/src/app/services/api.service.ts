@@ -10,6 +10,10 @@ import {
   SignupRequest,
   SpinResponse,
   CreatePostRequest,
+  GetNftsResponse,
+  Ednpoints,
+  CreateAuctionRequest,
+  Auction,
 } from '../types';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -20,8 +24,6 @@ import { Router } from '@angular/router';
 export class ApiService {
   isLoggedIn$ = new Subject<boolean>();
 
-  private baseUrl = 'http://localhost:5264/api';
-
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -30,13 +32,13 @@ export class ApiService {
 
   signup(body: SignupRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.baseUrl}/users/signup`, body)
+      .post<LoginResponse>(`${Ednpoints.SIGNUP_ENDPOINT}`, body)
       .pipe(tap((response) => this.setCredentials(response)));
   }
 
   login(body: LoginRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.baseUrl}/users/login`, body)
+      .post<LoginResponse>(`${Ednpoints.LOGIN_ENDPOINT}`, body)
       .pipe(tap((response) => this.setCredentials(response)));
   }
 
@@ -55,7 +57,7 @@ export class ApiService {
 
   findUser(body: GetUserRequest): Observable<boolean> {
     return this.http
-      .post<FindUserResponse>(`${this.baseUrl}/users/find`, body)
+      .post<FindUserResponse>(`${Ednpoints.FIND_USER_ENDPOINT}`, body)
       .pipe(map((response) => response.exists));
   }
 
@@ -64,9 +66,13 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<GetUserResponse>(`${this.baseUrl}/users/get`, body, {
-      headers,
-    });
+    return this.http.post<GetUserResponse>(
+      `${Ednpoints.GET_USER_ENDPOINT}`,
+      body,
+      {
+        headers,
+      }
+    );
   }
 
   getBalance(): Observable<number> {
@@ -75,8 +81,57 @@ export class ApiService {
       Authorization: `Bearer ${token}`,
     });
     return this.http
-      .get<{ balance: number }>(`${this.baseUrl}/users/balance`, { headers })
+      .get<{ balance: number }>(`${Ednpoints.GET_BALANCE_ENDPOINT}`, {
+        headers,
+      })
       .pipe(map((response) => response.balance));
+  }
+
+  getUserNfts(username: string): Observable<GetNftsResponse> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<GetNftsResponse>(
+      `${Ednpoints.GET_USER_NFTS_ENDPOINT}/${username}`,
+      {
+        headers,
+      }
+    );
+  }
+
+  getAuctions(): Observable<Auction[]> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<Auction[]>(`${Ednpoints.GET_AUCTIONS_ENDPOINT}`, {
+      headers,
+    });
+  }
+
+  createAuction(request: CreateAuctionRequest): Observable<void> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<void>(
+      `${Ednpoints.CREATE_AUCTION_ENDPOINT}`,
+      request,
+      {
+        headers,
+      }
+    );
+  }
+
+  buyNft(auction: Auction): Observable<void> {
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<void>(Ednpoints.BUY_NFT_ENDPOINT, auction, {
+      headers,
+    });
   }
 
   spin(): Observable<SpinResponse> {
@@ -84,7 +139,7 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<SpinResponse>(`${this.baseUrl}/users/spin`, {
+    return this.http.get<SpinResponse>(`${Ednpoints.SPIN_ENDPOINT}`, {
       headers,
     });
   }
@@ -94,7 +149,7 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<boolean>(`${this.baseUrl}/posts/create`, body, {
+    return this.http.post<boolean>(`${Ednpoints.CREATE_POST_ENDPOINT}`, body, {
       headers,
     });
   }
@@ -104,9 +159,13 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.put<boolean>(`${this.baseUrl}/posts/edit/${id}`, body, {
-      headers,
-    });
+    return this.http.put<boolean>(
+      `${Ednpoints.EDIT_POST_ENDPOINT}/${id}`,
+      body,
+      {
+        headers,
+      }
+    );
   }
 
   deletePost(id: number): Observable<boolean> {
@@ -114,9 +173,12 @@ export class ApiService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.delete<boolean>(`${this.baseUrl}/posts/delete/${id}`, {
-      headers,
-    });
+    return this.http.delete<boolean>(
+      `${Ednpoints.DELETE_POST_ENDPOINT}/${id}`,
+      {
+        headers,
+      }
+    );
   }
 
   getMainPageImg(): Observable<string> {
@@ -126,7 +188,10 @@ export class ApiService {
       Expires: '0',
     });
     return this.http
-      .get(`${this.baseUrl}/users/main`, { responseType: 'blob', headers })
+      .get(`${Ednpoints.MAIN_PAGE_IMG_ENDPOINT}`, {
+        responseType: 'blob',
+        headers,
+      })
       .pipe(map((blob) => URL.createObjectURL(blob)));
   }
 }

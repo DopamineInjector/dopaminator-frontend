@@ -47,9 +47,23 @@ export class NavbarComponent {
   }
 
   navigateToAccount(username?: string) {
-    this.router.navigate([Views.ACCOUNT_PAGE], {
-      state: { username: username },
-    });
+    if (this.userName) {
+      this.router.navigate([Views.ACCOUNT_PAGE], {
+        state: { username: username },
+      });
+    } else {
+      this.notificationService.error('You must log in to access this page');
+    }
+  }
+
+  navigateToStock(username?: string) {
+    if (this.userName) {
+      this.router.navigate([Views.STOCK_PAGE], {
+        state: { username: username },
+      });
+    } else {
+      this.notificationService.error('You must log in to access this page');
+    }
   }
 
   logout() {

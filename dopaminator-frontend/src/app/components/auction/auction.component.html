@@ -1,0 +1,14 @@
+<div clas="auction">
+  <div class="auction__img-container">
+    <img
+      [src]="'data:image/png;base64, ' + auction.image"
+      class="auction__img"
+    />
+  </div>
+  <div>Nft: {{ auction.description }}</div>
+  <div>Price: {{ auction.price }}</div>
+  <div>Seller: {{ auction.username }}</div>
+  <button *ngIf="!isMine" mat-button class="dope-button" (click)="buy()">
+    Buy
+  </button>
+</div>
