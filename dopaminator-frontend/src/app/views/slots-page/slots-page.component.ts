@@ -90,8 +90,8 @@ export class SlotsPageComponent implements OnInit {
             this.isSpinning = true;
             setTimeout(() => {
               this.canSpin = true;
-              this.playWinSound();
               if (result.isWin) {
+                this.playWinSound();
                 this.openBigWinModal(result);
               }
             }, maxSpinTime * 1000);
