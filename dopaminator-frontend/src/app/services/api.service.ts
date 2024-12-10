@@ -67,6 +67,9 @@ export class ApiService {
   getUser(body: GetUserRequest): Observable<GetUserResponse> {
     const token = this.cookieService.get('token');
     const headers = new HttpHeaders({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
       Authorization: `Bearer ${token}`,
     });
     return this.http.post<GetUserResponse>(

@@ -124,9 +124,18 @@ export class UserAccountComponent implements OnChanges, OnDestroy {
     this.apiService
       .buyPost(id)
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(() => {
-        this.loadUserData();
-        this.balanceChangeService.balanceChanged();
+      .subscribe({
+        next: () => {
+          this.loadUserData();
+          this.balanceChangeService.balanceChanged();
+        },
+        error: (e) => {
+          if (e.error && e.error.message) {
+            this.notificationService.error(e.error.message);
+          } else {
+            this.notificationService.error('An unknown error occurred');
+          }
+        },
       });
   }
 

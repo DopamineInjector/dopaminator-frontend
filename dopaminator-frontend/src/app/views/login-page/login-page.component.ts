@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginRequest, Views } from '../../types';
 import { NotificationService } from '../../services/notification.service';
 import { Subject, takeUntil } from 'rxjs';
+import { BalanceChangeService } from '../../services/balanceChange.service';
 
 @Component({
   selector: 'login-page',
@@ -52,7 +53,8 @@ export class LoginPageComponent implements OnDestroy {
   constructor(
     private apiService: ApiService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private balanceChangeService: BalanceChangeService
   ) {}
 
   ngOnDestroy(): void {
@@ -79,6 +81,7 @@ export class LoginPageComponent implements OnDestroy {
       .subscribe({
         next: () => {
           this.notificationService.success('Logged in succesfully');
+          this.balanceChangeService.balanceChanged();
           this.router.navigate([Views.MAIN_PAGE]);
         },
         error: (e) => {
